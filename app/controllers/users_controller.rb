@@ -1,7 +1,7 @@
 class UsersController < ApplicationController
   before_action :logged_in_user, only: [:index, :edit, :update, :destroy]
-   before_action :correct_user,   only: [:edit, :update]
-before_action :admin_user,     only: :destroy
+  before_action :correct_user,   only: [:edit, :update]
+  before_action :admin_user,     only: :destroy
 
 def destroy
     User.find(params[:id]).destroy
@@ -42,7 +42,6 @@ def logged_in_user
 def create
     @user = User.new(user_params)
     if @user.save
-      @user.send_activation_email
     	UserMailer.account_activation(@user).deliver_now
       flash[:info] = "Please check your email to activate your account."
       redirect_to root_url
